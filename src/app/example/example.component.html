@@ -2,7 +2,9 @@
 <h3 class="bg-warning p-3 m-2 border border-dark text-center">Observable</h3>
 <ul class="list-group container">
 
-    <li class="list-group-item text-center" *ngFor="let x of data">{{x}}</li> 
+    <li class="list-group-item text-center" *ngFor="let x of data">{{x }}</li>
+        <!-- <li class="list-group-item text-center" *ngFor="let x of data">{{x |async }}</li>  -->
+ 
 </ul>
 
 <hr>
@@ -30,3 +32,9 @@
 <button class="btn btn-primary m-4 p-2" (click)="getData9()">Observable 9</button>
 
 <button class="btn btn-danger m-4 p-2" (click)="stop()">STOP</button>
+
+<button class="btn btn-primary m-4 p-2" (click)="getData10()">Observable 10</button>
+<button class="btn btn-primary m-4 p-2" (click)="getData11()">Observable 11</button>
+<button class="btn btn-primary m-4 p-2" (click)="getData12()">Observable 12</button>
+<button class="btn btn-primary m-4 p-2" (click)="getData13()">Observable 13</button>
+<button class="btn btn-primary m-4 p-2" (click)="getData14()">Observable 14</button>

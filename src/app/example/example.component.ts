@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { filter, from, interval, map, merge, Observable, of, take } from 'rxjs';
+import { catchError, delay, filter, from, interval, map, merge, mergeAll, mergeMap, Observable, of, retry, switchAll, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-example',
-  imports: [CommonModule],
+  imports: [CommonModule,AsyncPipe],
   templateUrl: './example.component.html',
   styleUrl: './example.component.css'
 })
@@ -125,6 +125,71 @@ export class ExampleComponent {
      this.unSubscribeObservable2.unsubscribe();
   }
 
+
+  getData10()
+  {
+    of(12,67,89,45)
+    .pipe(
+      mergeMap(x=>of(x))  
+    ).subscribe({
+      next:(value)=>{console.log(value)}
+    })
+  }
+
+  getData11()
+  {
+    of(12,56,78,45)
+    .pipe(
+      delay(3000)
+    ).subscribe({
+      next:(value)=>{this.data.push(value)}
+    })
+  }
+
+  getData12()
+  {
+     of(12,56,78,45)
+     .pipe(
+      switchMap(x=>of(x).pipe(delay(3000))) 
+     ).subscribe({
+      next:(value)=>this.data.push(value)
+     })
+
+  }
+
+  getData13()
+  {
+    interval(500)
+    .pipe(
+      map((x)=>{
+        if(x==3)
+        {
+          throw new Error("Value is equal to 3")
+        }
+        return  x;
+      }),
+      retry(2),
+      catchError((error)=>{
+
+        console.log(error.message);
+        return of("A","B","C")
+
+      })
+    ).subscribe({
+      next:(value)=>this.data.push(value)
+    })
+  }
+
+
+  getData14()
+  {
+    of(12,56,78,56,324)
+    .pipe(
+      map(x=>of(x))
+    ).subscribe({
+      next:(value)=>this.data.push(value)
+    })
+  }
 
 
 
